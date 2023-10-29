@@ -32,7 +32,10 @@ s .main-bnr {
   padding-bottom: 70px;
 }
 .inner-content1 {
-  padding-top: 200px;
+  padding-top: 100px;
+}
+.inner-content2 {
+  padding-top: 30px;
   padding-bottom: 70px;
 }
 .Count {
@@ -53,4 +56,9 @@ s .main-bnr {
 
 .About1-head {
   padding-left: 60px;
+}
+.icon-media {
+  width: 80px;
+  display: block;
+  margin: auto;
 }

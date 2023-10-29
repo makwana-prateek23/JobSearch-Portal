@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import About from "./About";
+import JobsCategory from "./JobsCategory";
 // import User from "./UserLogin";
 function Navbar() {
   // const [showDetails, setShowDetails] = useState(false);
@@ -48,7 +49,7 @@ function Navbar() {
           <div className="relative pt-50px">
             <div className="flex flex-wrap main-bnr justify-evenly bg-gray-100">
               <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-                <div className="flex items-center row flex-wrap ">
+                <div className="flex items-center flex-wrap ">
                   <div className="xl:col-span-7 lg:col-span-7 md:col-span-12">
                     <h6 className="text-blue-400 mb-2 text-xl font-semibold">
                       We Have 208,000+ Live jobs
@@ -114,6 +115,9 @@ function Navbar() {
         </section>
         <section className="inner-content">
           <About />
+        </section>
+        <section>
+          <JobsCategory />
         </section>
       </div>
     </>
