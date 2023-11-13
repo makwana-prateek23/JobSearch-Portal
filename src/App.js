@@ -1,5 +1,5 @@
 import "./App.css";
-import Navbar from "./NavBar";
+import Main from "./Main";
 
 function App() {
   // const user = {
@@ -8,7 +8,7 @@ function App() {
   // };
   return (
     <>
-      <Navbar />
+      <Main />
     </>
   );
 }

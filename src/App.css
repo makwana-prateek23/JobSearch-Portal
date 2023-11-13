@@ -38,6 +38,13 @@ s .main-bnr {
   padding-top: 30px;
   padding-bottom: 70px;
 }
+.inner-content4 {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.swipe-slide {
+  width: 386.667px;
+}
 .Count {
   position: relative;
   top: 30px;
@@ -61,4 +68,72 @@ s .main-bnr {
   width: 80px;
   display: block;
   margin: auto;
+}
+.dz-card {
+  background-color: rgb(45, 81, 200) 0, 106, 255;
+  border: solid 1 px;
+  display: flex;
+  padding-bottom: 20px;
+  padding: 30px;
+  position: relative;
+  justify-content: space-between;
+}
+
+.job-box {
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  background: #fff;
+  margin-bottom: 30px;
+  transition: 0.5s;
+}
+
+.svgStyle {
+  width: 50px;
+  height: 50px;
+}
+
+.dzCard-text {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.logo-image {
+  width: 60px; /* Adjust the width as needed */
+  height: 60px; /* Adjust the height as needed */
+  border-radius: 50%;
+  object-fit: cover; /* Ensures the image covers the circular container */
+}
+
+.FooterAction {
+  padding: 45px 70px;
+  border-radius: 8px;
+  background: var(--primary);
+  margin-bottom: -9%;
+}
+
+.FooterTop {
+  padding-top: 200px;
+}
+
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-title {
+  font-weight: 600;
+  margin-bottom: 15px;
+  position: relative;
+  line-height: 1.2;
+}
+
+.row {
+  --bs-gutter-x: 30px;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
 }

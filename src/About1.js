@@ -8,7 +8,7 @@ function About1() {
         <div className="  max-w-7xl sm:max-w-7xl mx-auto mx-auto px-4 sm:px-6 lg:px-4">
           <div className="flex lg:flex-nowrap sm:flex-wrap justify-center  items-center mb-7 justify-center">
             <div className="flex w-full lg-w-1/2 items-center mb-7">
-              <div className="w-full lg-w-1/2  ">
+              <div className="w-full lg-w-1/2">
                 <img
                   src="https://jobick.dexignlab.com/frontend/xhtml/assets/images/about/pic1.jpg"
                   alt="image1"
