@@ -1,6 +1,6 @@
 import React from "react";
 import About from "./About";
-import JobsCategory from "../JobsCategory";
+import JobsCategory from "./JobsCategory";
 import JobsGrid from "./JobsGrid";
 import { Swiper, SwiperSlide } from "swiper/react";
 import NavBar from "../components/NavBar";
@@ -57,7 +57,7 @@ function Main() {
               <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 <div className="flex items-center flex-wrap ">
                   <div className="xl:col-span-7 lg:col-span-7 md:col-span-12">
-                    <h6 className="text-blue-400 mb-2 text-xl font-semibold">
+                    <h6 className="text-blue-500 mb-2 text-xl font-semibold">
                       We Have 208,000+ Live jobs
                     </h6>
                     <h1 className="text-7xl mb-5 font-semibold">
@@ -72,7 +72,7 @@ function Main() {
                       Type your keywork,then click search to find your perfect
                       job
                     </p>
-                    <div className="m-4 w-full flex h-20 items-center bg-white rounded-xl shadow-xl mb-20px">
+                    <div className="m-2 w-full flex h-20 items-center bg-white rounded-xl shadow-xl mb-20px">
                       <div className="items-center">
                         <span className="text-blue-500 ml-6 mr-3 font-semibold">
                           <i class="fa-solid fa-magnifying-glass"></i>
