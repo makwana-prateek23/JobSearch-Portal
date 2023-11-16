@@ -62,7 +62,7 @@ function JobsGrid() {
       <div className="grid grid-cols-3 gap-4">
         {jsonData.map((data, index) => (
           <div className="bg-white p-4 rounded-lg job-box" key={index}>
-            <div className="job-media flex justify-between">
+            <div className="job-media mb justify-between flex">
               <span>
                 <img src={data.companyIcon} alt="Company Icon" />
               </span>

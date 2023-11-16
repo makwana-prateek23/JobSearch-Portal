@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import About from "./About";
-import JobsCategory from "./JobsCategory";
+import JobsCategory from "../JobsCategory";
 import JobsGrid from "./JobsGrid";
 import { Swiper, SwiperSlide } from "swiper/react";
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 import "swiper/swiper-bundle.css";
-import Footer from "./footer";
+import Footer from "../components/footer";
 // import User from "./UserLogin";
 function Main() {
-  const [isScrolled, setIsScrolled] = useState(false);
   // const [showDetails, setShowDetails] = useState(false);
   // const user = {
   //   name: "John Doe",
@@ -18,19 +17,7 @@ function Main() {
   // const handleUserClick = (value) => {
   //   setShowDetails(value);
   // };
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+
   const testimonials = [
     {
       id: 1,
@@ -61,14 +48,11 @@ function Main() {
   return (
     <>
       <div>
-        <header
-          className={`${
-            isScrolled ? "bg-blue-400" : "bg-tranparent bg-opacity-50"
-          } fixed top-0 z-50 w-full transition-all`}>
+        <header className="bg-gray-100">
           <NavBar />
         </header>
         <section>
-          <div className="relative pt-50px">
+          <div className="relative">
             <div className="flex flex-wrap main-bnr justify-evenly bg-gray-100">
               <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 <div className="flex items-center flex-wrap ">

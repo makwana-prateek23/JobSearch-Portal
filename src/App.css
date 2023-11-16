@@ -20,6 +20,9 @@ s .main-bnr {
   padding-top: 50px;
   z-index: 1;
 }
+.main-bnr {
+  padding-top: 50px;
+}
 
 .Banner {
   position: relative;
@@ -87,7 +90,10 @@ s .main-bnr {
   margin-bottom: 30px;
   transition: 0.5s;
 }
-
+.mb {
+  margin-bottom: 25px;
+  margin-top: 20px;
+}
 .svgStyle {
   width: 50px;
   height: 50px;
@@ -103,6 +109,7 @@ s .main-bnr {
   height: 60px; /* Adjust the height as needed */
   border-radius: 50%;
   object-fit: cover; /* Ensures the image covers the circular container */
+  max-width: 100%;
 }
 
 .FooterAction {
@@ -113,7 +120,7 @@ s .main-bnr {
 }
 
 .FooterTop {
-  padding-top: 200px;
+  padding: 200px 0px 30px 0;
 }
 
 section {
@@ -122,18 +129,30 @@ section {
 }
 
 .footer-title {
-  font-weight: 600;
   margin-bottom: 15px;
-  position: relative;
   line-height: 1.2;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-.row {
-  --bs-gutter-x: 30px;
-  --bs-gutter-y: 0;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: calc(-1 * var(--bs-gutter-y));
-  margin-right: calc(-0.5 * var(--bs-gutter-x));
-  margin-left: calc(-0.5 * var(--bs-gutter-x));
+.footext {
+  color: #6c96bb;
+}
+ul li {
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 15px;
+}
+.btn {
+  width: 90px;
+}
+
+.FooterBottom {
+  border-top: 1px solid rgba(72, 133, 237, 0.3);
+}
+
+.text-1 {
+  padding: 20px 0;
 }
