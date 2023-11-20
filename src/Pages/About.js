@@ -8,7 +8,7 @@ function About() {
   const location = useLocation();
 
   // Check if the current location is the home page ("/")
-  const isHomePage = location.pathname === "/";
+  const isAboutPage = location.pathname === "/about";
   return (
     <Layout>
       <div>
@@ -20,7 +20,7 @@ function About() {
               </div>
             </div>
           </div>
-          <div className="pb-16 relative">
+          <div className="inner-content relative">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-2">
               <div className=" mb-7 text-center">
                 <h6 className="text-lg font-semibold mb-2 text-blue-700">
@@ -96,12 +96,12 @@ function About() {
           <section className="">
             <About1 />{" "}
           </section>
-          {!isHomePage && (
+          {!isAboutPage && (
             <section>
               <JobsCategory />
             </section>
           )}
-          {!isHomePage && (
+          {!isAboutPage && (
             <section className="inner-content bg-gray-100">
               <div className="container max-w-7xl mx-auto px-4">
                 <div className="text-center mb-7">
