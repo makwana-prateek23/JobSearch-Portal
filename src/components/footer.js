@@ -1,9 +1,16 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 function Footer() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
   return (
     <div>
-      <div class="bg-gray-100 FooterTop">
+      <div
+        className={`bg-gray-100 ${
+          isHomePage ? "FooterTopHomePage" : "FooterTopOtherPages"
+        }`}>
         <div class="container  max-w-7xl mx-auto px-4 ">
           <div class="flex flex-wrap -mx-4 justify-between">
             {/* <!-- Column 1 --> */}

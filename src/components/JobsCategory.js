@@ -38,7 +38,7 @@ const JobsCategory = () => {
   ];
   return (
     <div>
-      <section className="inner-content2">
+      <section className="inner-content2 z-1">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="Section-head mb-7">
             <h6 className="text-center text-blue-500 font-semibold mb-2 text-semibold">

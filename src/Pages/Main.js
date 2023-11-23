@@ -1,7 +1,7 @@
 import React from "react";
-import About from "./About";
-import JobsCategory from "./JobsCategory";
-import JobsGrid from "./JobsGrid";
+import About from "../components/About";
+import JobsCategory from "../components/JobsCategory";
+import JobsGrid from "../components/JobsGrid";
 import { Swiper, SwiperSlide } from "swiper/react";
 import NavBar from "../components/NavBar";
 import "swiper/swiper-bundle.css";
@@ -48,9 +48,9 @@ function Main() {
   return (
     <>
       <div>
-        <header className="bg-gray-100">
+        <div className="bg-gray-100">
           <NavBar />
-        </header>
+        </div>
         <div className="content">
           <section>
             <div className="relative">

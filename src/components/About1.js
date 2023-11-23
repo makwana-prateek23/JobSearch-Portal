@@ -4,7 +4,7 @@ function About1() {
   return (
     <div>
       {" "}
-      <section className="inner-content1 bg-gray-100 relative overflow-hidden">
+      <section className="inner-content1 bg-gray-100 overflow-hidden">
         <div className="  max-w-7xl sm:max-w-7xl mx-auto mx-auto px-4 sm:px-6 lg:px-4">
           <div className="flex lg:flex-nowrap sm:flex-wrap justify-center  items-center mb-7 justify-center">
             <div className="flex w-full lg-w-1/2 items-center mb-7">
