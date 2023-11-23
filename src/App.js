@@ -1,6 +1,7 @@
 import "./App.css";
-import About from "./Pages/About";
-import JobsGrid from "./Pages/JobsGrid";
+
+import AboutUs from "./Pages/AboutUs";
+import Jobs from "./Pages/Jobs";
 import Main from "./Pages/Main";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -16,11 +17,11 @@ function App() {
     },
     {
       path: "/about-us",
-      element: <About />,
+      element: <AboutUs />,
     },
     {
       path: "/jobs",
-      element: <JobsGrid />,
+      element: <Jobs />,
     },
   ]);
   return <RouterProvider router={router} />;
