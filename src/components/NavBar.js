@@ -68,6 +68,11 @@ function NavBar() {
                   className={`text-${isScrolled ? "gray-200" : "black"}`}>
                   About Us
                 </Link>
+                <Link
+                  to={"/InternShips"}
+                  className={`text-${isScrolled ? "gray-200" : "black"}`}>
+                  Internships
+                </Link>
                 <p className={`text-${isScrolled ? "gray-200" : "black"}`}>
                   UserLogin
                 </p>

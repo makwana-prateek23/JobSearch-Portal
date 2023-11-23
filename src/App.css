@@ -139,7 +139,7 @@ s .main-bnr {
 .FooterTopOtherPages {
   padding-top: 80px;
 }
-section {
+.Section {
   position: relative;
   z-index: 1;
 }
