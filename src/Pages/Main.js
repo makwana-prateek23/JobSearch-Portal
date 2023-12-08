@@ -46,7 +46,7 @@ function Main() {
 
   return (
     <>
-      <div>
+      <div className="">
         <Layout>
           <div className="content">
             <section>

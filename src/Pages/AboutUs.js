@@ -2,7 +2,6 @@ import React from "react";
 import About from "../components/About";
 import JobsCategory from "../components/JobsCategory";
 import JobsGrid from "../components/JobsGrid";
-
 import Internship from "../components/Internship";
 import Layout from "../components/Layout";
 function AboutUs() {

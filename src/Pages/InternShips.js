@@ -1,9 +1,12 @@
 import React from "react";
 import Internship from "../components/Internship";
+import Layout from "../components/Layout";
 function InternShips() {
   return (
     <div>
-      <Internship />
+      <Layout>
+        <Internship />
+      </Layout>
     </div>
   );
 }

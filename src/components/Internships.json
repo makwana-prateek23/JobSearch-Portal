@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "title": "Software Development Intern",
+    "company": "TechCo",
+    "location": "Remote",
+    "duration": "3 months",
+    "description": "Join our software development team and work on exciting projects using the latest technologies.",
+    "requirements": [
+      "Programming skills",
+      "Problem-solving abilities",
+      "Team player"
+    ],
+    "applyLink": "https://example.com/apply"
+  },
+  {
+    "id": 2,
+    "title": "Marketing Intern",
+    "company": "MarketingHub",
+    "location": "New York, NY",
+    "duration": "6 months",
+    "description": "Learn marketing strategies, assist with campaigns, and contribute to our creative team.",
+    "requirements": [
+      "Marketing knowledge",
+      "Communication skills",
+      "Creativity"
+    ],
+    "applyLink": "https://example.com/apply"
+  },
+  {
+    "id": 3,
+    "title": "Data Science Intern",
+    "company": "DataTech",
+    "location": "San Francisco, CA",
+    "duration": "4 months",
+    "description": "Explore the world of data science and machine learning with hands-on projects and mentorship.",
+    "requirements": [
+      "Data analysis skills",
+      "Programming (Python, R)",
+      "Statistics knowledge"
+    ],
+    "applyLink": "https://example.com/apply"
+  },
+  {
+    "id": 4,
+    "title": "UX/UI Design Intern",
+    "company": "DesignStudio",
+    "location": "Los Angeles, CA",
+    "duration": "5 months",
+    "description": "Work closely with our design team to create user-centered and visually appealing interfaces.",
+    "requirements": [
+      "Design skills (Adobe XD, Figma)",
+      "Creativity",
+      "Attention to detail"
+    ],
+    "applyLink": "https://example.com/apply"
+  },
+  {
+    "id": 5,
+    "title": "Finance Intern",
+    "company": "FinanceCorp",
+    "location": "Chicago, IL",
+    "duration": "3 months",
+    "description": "Gain hands-on experience in financial analysis, budgeting, and reporting.",
+    "requirements": [
+      "Finance or accounting background",
+      "Analytical skills",
+      "Attention to detail"
+    ],
+    "applyLink": "https://example.com/apply"
+  },
+  {
+    "id": 6,
+    "title": "Cybersecurity Intern",
+    "company": "SecureTech",
+    "location": "Washington, D.C.",
+    "duration": "4 months",
+    "description": "Assist our cybersecurity team in ensuring the security of our systems and data.",
+    "requirements": [
+      "Cybersecurity knowledge",
+      "Networking skills",
+      "Problem-solving abilities"
+    ],
+    "applyLink": "https://example.com/apply"
+  },
+  {
+    "id": 7,
+    "title": "Human Resources Intern",
+    "company": "HRConnect",
+    "location": "Atlanta, GA",
+    "duration": "3 months",
+    "description": "Get hands-on experience in HR operations, recruitment, and employee engagement.",
+    "requirements": [
+      "Human resources or business major",
+      "Communication skills",
+      "Team player"
+    ],
+    "applyLink": "https://example.com/apply"
+  },
+  {
+    "id": 8,
+    "title": "Environmental Science Intern",
+    "company": "EcoSolutions",
+    "location": "Denver, CO",
+    "duration": "6 months",
+    "description": "Contribute to environmental research and sustainability projects in our dynamic team.",
+    "requirements": [
+      "Environmental science background",
+      "Research skills",
+      "Passion for sustainability"
+    ],
+    "applyLink": "https://example.com/apply"
+  }
+]

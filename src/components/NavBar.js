@@ -26,7 +26,7 @@ function NavBar() {
 
   return (
     <div>
-      <header>
+      <header className="bg-gray-100">
         <nav
           className={`bg-${
             isMainPage && !isScrolled ? "transparent" : "blue-400"
@@ -73,12 +73,16 @@ function NavBar() {
                   className={`text-${isScrolled ? "gray-200" : "black"}`}>
                   Internships
                 </Link>
-                <p className={`text-${isScrolled ? "gray-200" : "black"}`}>
-                  UserLogin
-                </p>
-                <p className={`text-${isScrolled ? "gray-200" : "black"}`}>
-                  UserRegister
-                </p>
+                <Link
+                  to={"/Login"}
+                  className={`text-${isScrolled ? "gray-200" : "black"}`}>
+                  Login
+                </Link>
+                <Link
+                  to={"/Register"}
+                  className={`text-${isScrolled ? "gray-200" : "black"}`}>
+                  Register
+                </Link>
               </div>
               <div className="hidden lg:flex h-7 w-4/12 bg-gray-200">
                 <input
