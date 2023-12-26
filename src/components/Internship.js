@@ -3,15 +3,25 @@ import internshipsData from "./Internships.json";
 
 const Internship = () => {
   return (
-    <div>
-      <div className="inner-content bg-gray-100">
+    <div className="">
+      <div className="ab-bnr">
+        ::before
+        <div className="container max-w-7xl mx-auto px-4">
+          <div className="ab-banner-inner">
+            <h1 className="text-center text-6xl text-white font-bold ">
+              Internship
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div className="inner-content4">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-7">
             <h6 className="text-blue-500 font-semibold mb-2 text-lg">
               All Internships
             </h6>
             <h2 className="text-6xl font-semibold mb-2">
-              Find Best Internships as your skills
+              Find Best Internships as per your skills
             </h2>
           </div>
 
@@ -19,7 +29,7 @@ const Internship = () => {
             {internshipsData.map((internship) => (
               <div
                 key={internship.id}
-                className="bg-white p-6 mb-6 rounded shadow-md">
+                className="bg-gray-100 p-6 mb-6 rounded shadow-md">
                 <h3 className="text-xl font-semibold mb-2">
                   {internship.title}
                 </h3>

@@ -1,5 +1,8 @@
+PageWrapper {
+  background-color: #fff !important;
+}
 header {
-  position: relative;
+  position: absolute;
   z-index: 9999;
   height: 106px;
 }
@@ -120,6 +123,13 @@ s .main-bnr {
   object-fit: cover; /* Ensures the image covers the circular container */
   max-width: 100%;
 }
+.logo-image1 {
+  width: 100px;
+  height: 110px; /* Adjust the height as needed */
+  border-radius: 50%;
+  /* Ensures the image covers the circular container */
+  max-width: 100%;
+}
 
 .FooterAction {
   padding: 45px 70px;
@@ -204,8 +214,7 @@ ul li {
 }
 
 .ab-bnr h1 {
-  position: relative;
-  z-index: 3; /* Place the text above the overlay */
+  z-index: 23; /* Place the text above the overlay */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Add text shadow for better visibility */
   color: white;
 }
