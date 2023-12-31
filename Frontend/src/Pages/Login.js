@@ -6,8 +6,8 @@ function Login() {
   return (
     <div>
       <div className="flex min-h-full flex-1 flex-col justify-center items-center bg-gray-100  h-screen  px-6 py-12 lg:px-8">
-        <div className="bg-blue-200  w-4/12 shadow-xl h-screen items-center justify-center">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="bg-blue-200  w-4/12 shadow-md h-screen items-center justify-center">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-12">
             <img
               className="mx-auto h-10 w-auto logo-image1"
               src={require("../Logo/CareerGate.png")}
