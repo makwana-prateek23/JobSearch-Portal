@@ -1,7 +1,7 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const UserModel = require("../models/user.model");
+const UserModel = require("../models/User");
 const {
   registerSchema,
   loginSchema,

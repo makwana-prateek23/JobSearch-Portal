@@ -1,29 +1,57 @@
 const express = require("express");
-const app = express();
-
 const mongoose = require("mongoose");
-const bodyparser = require("body-parser");
 const cors = require("cors");
-
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
+const app = express();
 const port = process.env.PORT || 3000;
+const dbConfig = require("./src/config/dbconfig");
 
-mongoose.connect("mongodb://localhost:27017/");
+const corsOptions = {
+  origin: true,
+  credentials: true,
+};
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
+app.use(cookieParser());
+
+mongoose.connect(dbConfig.connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 mongoose.connection.on("error", (error) => {
-  console.log(error.messege);
-  process.exit(true);
+  console.error("Error connecting to MongoDB:", error);
+  process.exit(1);
 });
 
-app.use(bodyparser.urlencoded({ extended: false }));
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+});
 
-app.use(bodyparser.json());
+// Middleware to log incoming requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 
-const routes = require("./src/routes/authRoutes");
+// Authentication routes
+const authRoutes = require("./src/routes/authRoutes");
+app.use("/auth", authRoutes);
 
-app.use(routes);
+// Root endpoint
+app.get("/", (req, res) => {
+  res.json({ message: "Server is running" });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong!");
+});
 
 app.listen(port, () => {
-  console.log("WORKING");
+  console.log(`Server running on port ${port}`);
 });
