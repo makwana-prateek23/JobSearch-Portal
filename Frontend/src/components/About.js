@@ -1,20 +1,24 @@
 import React from "react";
 import About1 from "./About1";
+import { useLocation } from "react-router-dom";
 
 function About() {
+  const location = useLocation();
+  const isAboutPage = location.pathname.includes("/about");
   return (
     <div>
       <div className="Page-content">
-        <div className="ab-bnr">
-          ::before
-          <div className="container max-w-7xl mx-auto px-4">
-            <div className="ab-banner-inner">
-              <h1 className="text-center text-6xl text-white font-bold ">
-                About Us
-              </h1>
+        {isAboutPage && (
+          <div className="ab-bnr">
+            <div className="container max-w-7xl mx-auto px-4">
+              <div className="ab-banner-inner">
+                <h1 className="text-center text-6xl text-white font-bold ">
+                  About Us
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
+        )}
         <div className="inner-content relative">
           <div className="max-w-7xl mx-auto sm:px-6 lg:px-2">
             <div className=" mb-7 text-center">

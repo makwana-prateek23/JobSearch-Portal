@@ -13,15 +13,20 @@ const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     await registerSchema.validateAsync({ name, email, password });
+
     const userExists = await UserModel.findOne({ email: email });
     if (userExists) {
       return res.status(403).json({ message: "User already exists" });
     }
-    await bcrypt.hash(password, 10).then(async (hash) => {
-      await UserModel.create({ name, email, password: hash }).then((user) => {
-        return res.status(200).json(user);
-      });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await UserModel.create({
+      name,
+      email,
+      password: hashedPassword,
     });
+
+    return res.status(200).json(user);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: err.message });
@@ -43,7 +48,7 @@ const login = async (req, res) => {
               email: userExists.email,
               role: userExists.role,
             },
-            JWT_SECRET,
+            process.env.JWT_SECRET,
             {
               expiresIn: "15m",
             }

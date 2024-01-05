@@ -11,6 +11,7 @@ const JobsCategory = () => {
     {
       title: "Illustration",
       description: "200+Posted New Jobs",
+      image: "",
     },
     {
       title: "Cool Art",

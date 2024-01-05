@@ -1,117 +1,100 @@
 import React, { useState } from "react";
 
-function Register() {
+const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     username: "",
+    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
-  const { username, email, password, confirmPassword } = formData;
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Perform form validation here
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    // Submit the form data to the server or perform other actions
+    // You can handle form submission logic here
     console.log("Form submitted:", formData);
-
-    // You can add logic to send the data to your server or perform other actions here
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <form
-        className="bg-white p-8 rounded shadow-md w-96"
-        onSubmit={handleSubmit}>
-        <h2 className="text-2xl font-semibold mb-6">User Registration</h2>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username">
-            Username:
-          </label>
-          <input
-            className="border rounded w-full py-2 px-3"
-            type="text"
-            id="username"
-            name="username"
-            value={username}
-            onChange={handleChange}
-            required
+    <div className="min-h-full flex-1 flex-col flex bg-blue-200  h-screen items-center justify-center px-6 py-12 lg:px-8">
+      <div className="bg-blue-100 w-4/12 shadow-lg h-screen items-center justify-center">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-10">
+          <img
+            className="mx-auto h-10 w-auto logo-image1"
+            src={require("../Logo/CareerGate.png")}
+            alt="Your Company"
           />
+          <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            register Your account
+          </h2>
         </div>
+        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className=" p-8 rounded max-w-md" onSubmit={handleSubmit}>
+            <label className="block mb-2" htmlFor="name">
+              Name:
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
+            />
+            <label className="block mb-2" htmlFor="username">
+              User Name:
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
+            />
 
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="email">
-            Email:
-          </label>
-          <input
-            className="border rounded w-full py-2 px-3"
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            required
-          />
+            <label className="block mb-2" htmlFor="email">
+              Email:
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
+            />
+
+            <label className="block mb-2" htmlFor="password">
+              Password:
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
+            />
+
+            <button
+              type="submit"
+              className="bg-green-500 text-white p-2 rounded">
+              Submit
+            </button>
+          </form>
         </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="password">
-            Password:
-          </label>
-          <input
-            className="border rounded w-full py-2 px-3"
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="confirmPassword">
-            Confirm Password:
-          </label>
-          <input
-            className="border rounded w-full py-2 px-3"
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button
-          className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-          type="submit">
-          Register
-        </button>
-      </form>
+      </div>
     </div>
   );
-}
+};
 
-export default Register;
+export default RegistrationForm;

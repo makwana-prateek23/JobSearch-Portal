@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const config = require("../config/db.config");
+const config = require("../config/dbconfig");
 
 const { secret } = config[process.env.NODE.ENV || "development"];
 

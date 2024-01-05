@@ -85,13 +85,18 @@ function NavBar() {
                     Register
                   </Link>
                 </div>
-                <div className="hidden lg:flex h-7 w-4/12 bg-gray-200">
+                <div
+                  className={`hidden lg:flex h-7 w-4/12  rounded-md ${
+                    isScrolled ? "bg-gray-200" : "bg-blue-200"
+                  }`}>
                   <input
-                    type="Search"
-                    placeholder="Search For Jobs"
-                    className="outline-none bg-gray-200 items-center w-11/12"
+                    type="text"
+                    placeholder="Search For Jobs.."
+                    className={`outline-none  items-center rounded-md w-11/12 ${
+                      isScrolled ? "bg-gray-200" : "bg-blue-200"
+                    }`}
                   />
-                  <span className="">
+                  <span>
                     <i className="fa-solid fa-magnifying-glass"></i>
                   </span>
                 </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import About from "../components/About";
+import { useNavigate } from "react-router-dom";
 import JobsCategory from "../components/JobsCategory";
 import JobsGrid from "../components/JobsGrid";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,7 +17,11 @@ function Main() {
   // const handleUserClick = (value) => {
   //   setShowDetails(value);
   // };
-
+  const navigate = useNavigate();
+  const handleCreateAccount = () => {
+    // Redirect to the register page
+    navigate("/register"); // Replace "/register" with the actual path to your register page
+  };
   const testimonials = [
     {
       id: 1,
@@ -47,7 +52,7 @@ function Main() {
   return (
     <>
       <div className="PageWrapper">
-        <Layout>
+        <Layout data-aos="slide-down" data-aos-duration="1200">
           <div className="content">
             <section>
               <div className="relative">
@@ -205,7 +210,10 @@ function Main() {
                     </h3>
                   </div>
                   <div className="w-1/6 bg-white text-blue-500 h-12 rounded-lg font-semibold flex items-center justify-center">
-                    <button> Create Free Account</button>
+                    <button onClick={handleCreateAccount}>
+                      {" "}
+                      Create Free Account
+                    </button>
                   </div>
                 </div>
               </section>

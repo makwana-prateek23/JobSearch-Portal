@@ -1,19 +1,30 @@
 import React from "react";
 import internshipsData from "./Internships.json";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Internship = () => {
+  const navigate = useNavigate();
+
+  const handleApplyClick = (event) => {
+    event.preventDefault();
+    // Redirect to the login page
+    navigate("/login");
+  };
+  const location = useLocation();
+  const isInternPage = location.pathname.includes("/InternShips");
   return (
     <div className="">
-      <div className="ab-bnr">
-        ::before
-        <div className="container max-w-7xl mx-auto px-4">
-          <div className="ab-banner-inner">
-            <h1 className="text-center text-6xl text-white font-bold ">
-              Internship
-            </h1>
+      {isInternPage && (
+        <div className="ab-bnr">
+          <div className="container max-w-7xl mx-auto px-4">
+            <div className="ab-banner-inner">
+              <h1 className="text-center text-6xl text-white font-bold ">
+                Internship
+              </h1>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="inner-content4">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-7">
@@ -50,9 +61,10 @@ const Internship = () => {
                 </div>
 
                 <a
-                  href={internship.applyLink}
+                  href="/login"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={handleApplyClick}
                   className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded inline-block">
                   Apply Now
                 </a>
