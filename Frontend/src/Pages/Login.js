@@ -1,26 +1,15 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+axios.defaults.withCredentials = true;
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); // Error state to display error messages
   const navigate = useNavigate();
-  axios.defaults.withCredentials = true;
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/auth")
-      .then((response) => {
-        console.log(response.data);
 
-        // Navigate directly to the dashboard
-        navigate("/dashboard");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [navigate]);
   const handleLogin = async (e) => {
     e.preventDefault();
     const loginData = {
@@ -30,31 +19,40 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/login",
+        "http://localhost:3000/auth/login",
         loginData
       );
 
       if (response.status === 200) {
-        alert("Logged in successfully!");
-        const userRole = response.data.data.user.role;
+        alert(response.data.message); // Alert the message from response
+        const userRole = response.data.role; // Get the role directly
+        const token = response.data.token; // Get the token directly
 
-        if (userRole === "admin") {
+        // Store the token in localStorage
+        localStorage.setItem("token", token);
+
+        // Navigate based on the user role
+        if (userRole === "admin ,user") {
           navigate("/dashboard");
         } else {
-          navigate("/home");
+          navigate("/");
         }
-      } else {
-        const errorData = await response.json();
-        alert(errorData.message);
       }
     } catch (error) {
-      console.error("Login failed:", error.message);
-      alert("An error occurred while logging in.");
+      // Improved error handling
+      console.error(
+        "Login failed:",
+        error.response?.data?.message || error.message
+      );
+      setError(
+        error.response?.data?.message || "An error occurred while logging in."
+      );
     }
   };
+
   return (
     <div>
-      <div className="flex min-h-full flex-1 flex-col justify-center items-center bg-blue-200  h-screen  px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center items-center bg-blue-200 h-screen px-6 py-12 lg:px-8">
         <div className="bg-blue-100 w-4/12 shadow-md h-screen items-center justify-center">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-12">
             <img
@@ -67,12 +65,8 @@ function Login() {
             </h2>
           </div>
 
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
-            <form
-              className="space-y-6"
-              action="#"
-              method="POST"
-              onSubmit={handleLogin}>
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form className="space-y-6" onSubmit={handleLogin}>
               <div>
                 <label
                   htmlFor="email"
@@ -86,7 +80,7 @@ function Login() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset p-2 ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -99,7 +93,8 @@ function Login() {
                     className="block text-sm font-medium leading-6 text-gray-900">
                     Password
                   </label>
-                  <div className="text-sm">
+
+                  <div className="relative top-16 mt-text-sm">
                     <a
                       href="#!"
                       className="font-semibold text-indigo-600 hover:text-indigo-500">
@@ -114,11 +109,15 @@ function Login() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
+
+              {error && (
+                <div className="text-red-600 text-sm font-medium">{error}</div>
+              )}
 
               <div>
                 <button

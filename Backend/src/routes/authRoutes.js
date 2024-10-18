@@ -1,15 +1,31 @@
+// authRoutes.js
 const express = require("express");
-
 const router = express.Router();
+const {
+  register,
+  login,
+  verifyJwt,
+  logout,
+  checkRole
+} = require("../controllers/authController");
 
-const AuthController = require("../controllers/authController");
+// Register route
+router.post("/register", register);
+// Login route
+router.post("/login", login);
 
-router.post("/register", AuthController.register);
+// Verify route
+router.get("/protected", verifyJwt, (req, res) => {
+  res.json({ message: "This is a protected route", user: req.userData });
+});
 
-router.post("/login", AuthController.login);
+// Admin-only Route Example (User must be admin)
+router.get("/admin", verifyJwt, checkRole("admin"), (req, res) => {
+  res.json({ message: "Welcome Admin" });
+});
 
-router.post("/verify", AuthController.verifyJwt);
+// Logout route
+router.post("/logout", logout);
 
-router.post("/logout", AuthController.logout);
 
 module.exports = router;

@@ -7,6 +7,7 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 const dbConfig = require("./src/config/dbconfig");
+const authRoutes = require("./src/routes/authRoutes");
 
 const corsOptions = {
   origin: true,
@@ -38,7 +39,6 @@ app.use((req, res, next) => {
 });
 
 // Authentication routes
-const authRoutes = require("./src/routes/authRoutes");
 app.use("/auth", authRoutes);
 
 // Root endpoint

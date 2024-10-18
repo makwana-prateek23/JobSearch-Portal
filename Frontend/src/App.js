@@ -12,41 +12,34 @@ import Jobs from "./Pages/Jobs";
 import Login from "./Pages/Login";
 import Main from "./Pages/Main";
 import Register from "./Pages/Register";
-import { AuthProvider, useAuth } from "./Contexts/.auth-context";
+import { AuthProvider, useAuth } from "./Contexts/auth-context";
 import Dashboard from "./Pages/Dashboard";
 
 function App() {
-  const auth = useAuth();
-  const { checkAuthStatus, isAuthenticated } = auth || {};
   const [loading, setLoading] = useState(true);
+  const { checkAuthStatus, isAuthenticated } = useAuth() || {};
+  const [error, setError] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Checking auth Status...");
+        console.log("Checking auth status...");
         await checkAuthStatus();
-        setLoading(false);
-        console.log("Auth Status checked successfully");
+        console.log("Auth status checked successfully");
       } catch (error) {
         console.error("Error checking auth status:", error);
+        setError("Failed to check authentication status");
+      } finally {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [checkAuthStatus]);
 
   const PrivateRoute = ({ element }) => {
-    console.log("Rendering PrivateRoute..");
-    console.log("loading:", loading);
-    console.log("isAuthenticated:", isAuthenticated);
-
-    return loading ? (
-      <div>Loading..</div>
-    ) : isAuthenticated ? (
-      element
-    ) : (
-      <Navigate to="/login" />
-    );
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+    return isAuthenticated ? element : <Navigate to="/login" />;
   };
 
   return (
@@ -59,12 +52,10 @@ function App() {
           <Route path="/internships" element={<InternShips />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {isAuthenticated && (
-            <Route
-              path="/dashboard"
-              element={<PrivateRoute element={<Dashboard />} />}
-            />
-          )}
+          <Route
+            path="/dashboard"
+            element={<PrivateRoute element={<Dashboard />} />}
+          />
         </Routes>
       </Router>
     </AuthProvider>

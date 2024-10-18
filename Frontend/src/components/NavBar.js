@@ -4,11 +4,21 @@ import { Link, useLocation } from "react-router-dom";
 function NavBar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
   const handleToggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+  const handleSearch = (event) => {
+    event.preventDefault();
+    // Add your global search logic here using the 'searchQuery'
+    console.log("Search query:", searchQuery);
+  };
 
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setSearchQuery(value);
+  };
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -92,7 +102,9 @@ function NavBar() {
                   <input
                     type="text"
                     placeholder="Search For Jobs.."
-                    className={`outline-none  items-center rounded-md w-11/12 ${
+                    onChange={handleChange}
+                    value={searchQuery}
+                    className={`outline-none  items-center rounded-md w-11/12 p-3 ${
                       isScrolled ? "bg-gray-200" : "bg-blue-200"
                     }`}
                   />
