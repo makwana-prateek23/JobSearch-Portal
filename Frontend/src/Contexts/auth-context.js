@@ -1,31 +1,48 @@
 import React, { createContext, useContext, useState } from "react";
+import axios from "axios";
 
+// Create the AuthContext
 const AuthContext = createContext();
 
+// Provider component
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    // Check local storage for the token on initial render
-    return localStorage.getItem("token") !== null;
-  });
-  const [token, setToken] = useState(localStorage.getItem("token")); // Store token state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState("");
 
-  const login = (newToken) => {
-    setIsAuthenticated(true);
-    setToken(newToken);
-    localStorage.setItem("token", newToken); // Store token in local storage
+  const login = async (email, password) => {
+    const loginData = { email, password };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/auth/login",
+        loginData
+      );
+      if (response.status === 200) {
+        const { role, token } = response.data; // Extract role and token
+        localStorage.setItem("token", token);
+        setIsAuthenticated(true);
+        setUserRole(role);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw new Error(error.response?.data?.message || "Login failed");
+    }
   };
 
   const logout = () => {
+    localStorage.removeItem("token");
     setIsAuthenticated(false);
-    setToken(null);
-    localStorage.removeItem("token"); // Remove token from local storage
+    setUserRole("");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userRole, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+// Custom hook to use the AuthContext
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
