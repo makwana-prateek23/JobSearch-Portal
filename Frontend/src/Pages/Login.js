@@ -1,55 +1,23 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-axios.defaults.withCredentials = true;
-
+import { useAuth } from "../Contexts/auth-context";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null); // Error state to display error messages
   const navigate = useNavigate();
+  const { login } = useAuth(); // Use the login function from context
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const loginData = {
-      email: email,
-      password: password,
-    };
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/login",
-        loginData
-      );
-
-      if (response.status === 200) {
-        alert(response.data.message); // Alert the message from response
-        const userRole = response.data.role; // Get the role directly
-        const token = response.data.token; // Get the token directly
-
-        // Store the token in localStorage
-        localStorage.setItem("token", token);
-
-        // Navigate based on the user role
-        if (userRole === "admin ,user") {
-          navigate("/dashboard");
-        } else {
-          navigate("/");
-        }
-      }
+      await login(email, password); // Call the login function from context
+      navigate("/dashboard"); // Navigate to the dashboard after successful login
     } catch (error) {
-      // Improved error handling
-      console.error(
-        "Login failed:",
-        error.response?.data?.message || error.message
-      );
-      setError(
-        error.response?.data?.message || "An error occurred while logging in."
-      );
+      setError(error.message);
     }
   };
-
   return (
     <div>
       <div className="flex min-h-full flex-1 flex-col justify-center items-center bg-blue-200 h-screen px-6 py-12 lg:px-8">
