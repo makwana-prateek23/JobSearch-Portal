@@ -44,19 +44,21 @@ function App() {
   }
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/internships" element={<InternShips />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={<PrivateRoute />} />
-        {/* <Route path="/dashboard" element={<Dashboard />} />
-        </Route> */}
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/internships" element={<InternShips />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<PrivateRoute requiredRole="user" />}>
+            <Route path="dashboard" element={<Dashboard />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

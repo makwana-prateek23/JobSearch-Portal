@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
 // Create the AuthContext
@@ -8,6 +8,15 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+    if (token) {
+      setIsAuthenticated(true);
+      setUserRole(role);
+    }
+  }, []);
 
   const login = async (email, password) => {
     const loginData = { email, password };
@@ -20,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         const { role, token } = response.data; // Extract role and token
         localStorage.setItem("token", token);
+        localStorage.setItem("role", role);
         setIsAuthenticated(true);
         setUserRole(role);
       }
