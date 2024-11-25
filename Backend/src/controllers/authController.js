@@ -3,6 +3,23 @@ const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/User");
 
+// Utility to generate tokens
+const generateAccessToken = (user) => {
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET is not defined in environment variables");
+  }
+  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" });
+};
+
+const generateRefreshToken = (user) => {
+  if (!process.env.JWT_REFRESH_SECRET) {
+    throw new Error(
+      "JWT_REFRESH_SECRET is not defined in environment variables"
+    );
+  }
+  return jwt.sign(user, process.env.JWT_REFRESH_SECRET, { expiresIn: "24h" });
+};
+
 // Register User with Role Assignment
 const register = [
   // Validation and sanitization middleware
@@ -45,15 +62,30 @@ const register = [
       // Save the user to the database
       await newUser.save();
 
-      // Generate JWT token (including the role)
-      const token = jwt.sign(
-        { userId: newUser._id, email: newUser.email, role: newUser.role },
-        process.env.JWT_SECRET,
-        { expiresIn: "1h" }
-      );
+      // Generate tokens after user is saved
+      const accessToken = generateAccessToken({
+        userId: newUser._id,
+        email: newUser.email,
+        role: newUser.role,
+      });
 
-      // Return success response with JWT token
-      res.status(201).json({ message: "User registered successfully", token });
+      const refreshToken = generateRefreshToken({
+        userId: newUser._id,
+        email: newUser.email,
+        role: newUser.role,
+      });
+
+      // Set the refresh token as a cookie
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true, // Make sure you're using HTTPS in production
+        sameSite: "Strict",
+      });
+
+      // Return success response with access token
+      res
+        .status(201)
+        .json({ message: "User registered successfully", accessToken });
     } catch (error) {
       console.error("Error registering user:", error);
       res.status(500).json({ message: "Internal server error" });
@@ -78,18 +110,27 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT token (including the role)
-    const token = jwt.sign(
-      { userId: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    const accessToken = generateAccessToken({
+      userId: user._id,
+      email: user.email,
+      role: user.role,
+    });
+    const refreshToken = generateRefreshToken({
+      userId: user._id,
+      email: user.email,
+      role: user.role,
+    });
 
-    // Return success response with JWT token and role
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+    });
+
     res.json({
       message: "Logged in successfully",
-      token,
-      role: user.role, // You can return the role separately if needed
+      accessToken,
+      role: user.role,
     });
   } catch (error) {
     console.error("Error logging in:", error);
@@ -101,8 +142,7 @@ const login = async (req, res) => {
 const logout = (req, res) => {
   try {
     // Clear JWT token from cookies
-    res.clearCookie("token");
-
+    res.clearCookie("refreshToken");
     // Return success response
     res.json({ message: "Logged out successfully" });
   } catch (error) {
@@ -111,18 +151,31 @@ const logout = (req, res) => {
   }
 };
 
+const refreshToken = (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
+
+  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ message: "Forbidden" });
+
+    const accessToken = generateAccessToken({
+      userId: decoded.userId,
+      email: decoded.email,
+      role: decoded.role,
+    });
+    res.json({ accessToken });
+  });
+};
+
 // Middleware to Verify JWT Token
 const verifyJwt = (req, res, next) => {
   try {
     // Extract JWT token from cookies
     const token = req.cookies.token;
-
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     // Attach decoded token payload to request object
     req.userData = decoded;
-
     // Call next middleware
     next();
   } catch (error) {
@@ -131,32 +184,10 @@ const verifyJwt = (req, res, next) => {
   }
 };
 
-// Middleware to Check Role
-const checkRole = (requiredRole) => {
-  return (req, res, next) => {
-    const token = req.cookies.token;
-
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      if (decoded.role !== requiredRole) {
-        return res
-          .status(403)
-          .json({ message: "Forbidden: Insufficient role" });
-      }
-
-      // Attach user data to request and continue
-      req.userData = decoded;
-      next();
-    } catch (error) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-  };
+module.exports = {
+  register,
+  login,
+  logout,
+  verifyJwt,
+  refreshToken,
 };
-
-// Example route using role check middleware
-// app.get("/admin-route", checkRole("admin"), (req, res) => {
-//   res.send("Welcome, Admin");
-// });
-
-module.exports = { register, login, logout, verifyJwt, checkRole };
-  

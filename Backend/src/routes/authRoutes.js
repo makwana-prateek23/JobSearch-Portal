@@ -6,7 +6,8 @@ const {
   login,
   verifyJwt,
   logout,
-  checkRole
+  refreshToken,
+  checkRole,
 } = require("../controllers/authController");
 
 // Register route
@@ -20,12 +21,11 @@ router.get("/protected", verifyJwt, (req, res) => {
 });
 
 // Admin-only Route Example (User must be admin)
-router.get("/admin", verifyJwt, checkRole("admin"), (req, res) => {
-  res.json({ message: "Welcome Admin" });
-});
-
+// router.get("/admin", verifyJwt, checkRole("admin"), (req, res) => {
+//   res.json({ message: "Welcome Admin" });
+// });
+router.post("/refresh-token", refreshToken);
 // Logout route
 router.post("/logout", logout);
-
 
 module.exports = router;

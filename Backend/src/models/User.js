@@ -22,9 +22,10 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'], // Only 'user' and 'admin' roles allowed
-    default: 'user', // By default, all users will have the role 'user'
+    enum: ["user", "admin"], // Only 'user' and 'admin' roles allowed
+    default: "user", // By default, all users will have the role 'user'
   },
+  refreshToken: { type: String },
 });
 
 // Create the User model

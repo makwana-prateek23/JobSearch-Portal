@@ -10,10 +10,11 @@ import Register from "./Pages/Register";
 import { AuthProvider, useAuth } from "./Contexts/auth-context";
 import Dashboard from "./Pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { checkAuthStatus, isAuthenticated } = useAuth() || {}; // Get the auth context
+  const { checkAuthStatus } = useAuth() || {}; // Get the auth context
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -36,7 +37,11 @@ function App() {
   }, [checkAuthStatus]);
 
   if (loading) {
-    return <div>Loading...</div>; // Display a loading state while checking auth
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    ); // Display a loading state while checking auth
   }
 
   if (error) {

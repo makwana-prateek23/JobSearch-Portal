@@ -10,7 +10,7 @@ const dbConfig = require("./src/config/dbconfig");
 const authRoutes = require("./src/routes/authRoutes");
 
 const corsOptions = {
-  origin: true,
+  origin: "http://localhost:3001",
   credentials: true,
 };
 
