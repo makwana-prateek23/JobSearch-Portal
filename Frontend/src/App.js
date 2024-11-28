@@ -11,7 +11,11 @@ import { AuthProvider, useAuth } from "./Contexts/auth-context";
 import Dashboard from "./Pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import LoadingSpinner from "./components/LoadingSpinner";
-
+import SearchJobs from "./Pages/SearchJobs";
+import SavedJobs from "./Pages/SavedJobs";
+import Applications from "./Pages/Applications";
+import DashboardHome from "./Pages/DashboardHome";
+import Settings from "./Pages/Settings";
 function App() {
   const [loading, setLoading] = useState(true);
   const { checkAuthStatus } = useAuth() || {}; // Get the auth context
@@ -36,32 +40,36 @@ function App() {
     fetchData();
   }, [checkAuthStatus]);
 
-  if (loading) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    ); // Display a loading state while checking auth
-  }
-
-  if (error) {
-    return <div className="text-red-500">{error}</div>; // Display error message if any
-  }
-
   return (
     <AuthProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/jobs" element={<Jobs />} />
-          <Route path="/internships" element={<InternShips />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route element={<PrivateRoute requiredRole="user" />}>
-            <Route path="dashboard" element={<Dashboard />} />
-          </Route>
-        </Routes>
+        {loading ? (
+          <LoadingSpinner /> // Render spinner while loading
+        ) : error ? (
+          <div className="text-red-500">{error}</div> // Render error if any
+        ) : (
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Main />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/internships" element={<InternShips />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Private Routes */}
+            <Route element={<PrivateRoute requiredRole="user" />}>
+              <Route path="/dashboard" element={<Dashboard />}>
+                {/* Default route inside dashboard */}
+                <Route index element={<DashboardHome />} />
+                <Route path="searchjobs" element={<SearchJobs />} />
+                <Route path="savedjobs" element={<SavedJobs />} />
+                <Route path="applications" element={<Applications />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+            </Route>
+          </Routes>
+        )}
       </Router>
     </AuthProvider>
   );
