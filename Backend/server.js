@@ -8,7 +8,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 const dbConfig = require("./src/config/dbconfig");
 const authRoutes = require("./src/routes/authRoutes");
-
+const jobRoutes = require("./src/routes/jobs");
+const internshipRoutes = require("./src/routes/Internships");
+const savedJobRoutes = require("./src/routes/savedJobs");
 const corsOptions = {
   origin: "http://localhost:3001",
   credentials: true,
@@ -40,6 +42,10 @@ app.use((req, res, next) => {
 
 // Authentication routes
 app.use("/auth", authRoutes);
+
+app.use("/api/jobs", jobRoutes);
+app.use("/api/internships", internshipRoutes);
+app.use("/api/savedJobs", savedJobRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {

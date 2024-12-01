@@ -1,80 +1,64 @@
-import React from "react";
-import internshipsData from "./Internships.json";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { DataContext } from "../Contexts/Data-context"; // Import DataContext
 
-const Internship = () => {
-  const navigate = useNavigate();
+function Internship() {
+  // Access internships data and loading state from context
+  const { internships, loading } = useContext(DataContext);
 
-  const handleApplyClick = (event) => {
-    event.preventDefault();
-    // Redirect to the login page
-    navigate("/login");
-  };
-  const location = useLocation();
-  const isInternPage = location.pathname.includes("/InternShips");
+  // Check if internships is defined and is an array before using .length
+  const hasInternships = Array.isArray(internships) && internships.length > 0;
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div
+          className="spinner-border animate-spin inline-block w-16 h-16 border-4 border-blue-600 rounded-full"
+          role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="">
-      {isInternPage && (
-        <div className="ab-bnr">
-          <div className="container max-w-7xl mx-auto px-4">
-            <div className="ab-banner-inner">
-              <h1 className="text-center text-6xl text-white font-bold ">
-                Internship
-              </h1>
-            </div>
-          </div>
-        </div>
-      )}
-      <div className="inner-content4">
-        <div className="container max-w-7xl mx-auto px-4">
-          <div className="text-center mb-7">
-            <h6 className="text-blue-500 font-semibold mb-2 text-lg">
-              All Internships
-            </h6>
-            <h2 className="text-6xl font-semibold mb-2">
-              Find Best Internships as per your skills
-            </h2>
-          </div>
-
-          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {internshipsData.map((internship) => (
-              <div
-                key={internship.id}
-                className="bg-gray-100 p-6 mb-6 rounded shadow-md">
-                <h3 className="text-xl font-semibold mb-2">
-                  {internship.title}
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  <strong>Company:</strong> {internship.company} |{" "}
-                  <strong>Location:</strong> {internship.location} |{" "}
-                  <strong>Duration:</strong> {internship.duration}
+    <div className="py-16 px-4">
+      <h2 className="text-2xl font-semibold text-center mb-6">
+        Available Internships
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {hasInternships ? (
+          internships.map((internship) => (
+            <div
+              key={internship._id}
+              className="bg-blue-300 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+              <h3 className="text-xl text-center mb-4 font-semibold text-gray-800">
+                {internship.title}
+              </h3>
+              <p className="text-gray-600">{internship.company}</p>
+              <p className="text-gray-500">{internship.location}</p>
+              <p className="text-gray-700 mt-2">{internship.description}</p>
+              <p className="mt-4 text-gray-800 font-medium">
+                Salary: {internship.salary}
+              </p>
+              <div className="flex justify-between items-center">
+                <p className="mt-2 text-gray-500 text-sm">
+                  Posted On:{" "}
+                  {new Date(internship.postedAt).toLocaleDateString()}
                 </p>
-                <p className="text-gray-800 mb-4">{internship.description}</p>
-
-                <div className="mb-4">
-                  <strong>Requirements:</strong>
-                  <ul className="list-disc pl-4">
-                    {internship.requirements.map((requirement, index) => (
-                      <li key={index}>{requirement}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <a
-                  href="/login"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleApplyClick}
-                  className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded inline-block">
-                  Apply Now
-                </a>
+                <button className="bg-gray-200 rounded-md p-2 py-2 text-black">
+                  Apply now
+                </button>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-600">
+            No internships available at the moment.
+          </p>
+        )}
       </div>
     </div>
   );
-};
+}
 
 export default Internship;

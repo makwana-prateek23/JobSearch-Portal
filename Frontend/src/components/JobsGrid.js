@@ -1,85 +1,45 @@
-import React from "react";
-const jsonData = [
-  {
-    companyIcon: "path/to/company1.svg",
-    jobUploadTime: "2 hours ago",
-    jobType: "Full Time",
-    jobTitle: "Senior Software Engineer",
-    companyDescription: "Company Description 1",
-    salary: "3000$",
-    smallSvg: "path/to/small1.svg",
-  },
-  {
-    companyIcon: "path/to/company2.svg",
-    jobUploadTime: "1 day ago",
-    jobType: "Part Time",
-    jobTitle: "Marketing Manager",
-    companyDescription: "Company Description 2",
-    salary: "2000$",
-    smallSvg: "path/to/small2.svg",
-  },
-  {
-    companyIcon: "path/to/company3.svg",
-    jobUploadTime: "5 hours ago",
-    jobType: "Full Time",
-    jobTitle: "Product Manager",
-    companyDescription: "Company Description 3",
-    salary: "4000$",
-    smallSvg: "path/to/small3.svg",
-  },
-  {
-    companyIcon: "path/to/company4.svg",
-    jobUploadTime: "3 days ago",
-    jobType: "Part Time",
-    jobTitle: "Graphic Designer",
-    companyDescription: "Company Description 4",
-    salary: "2500$",
-    smallSvg: "path/to/small4.svg",
-  },
-  {
-    companyIcon: "path/to/company5.svg",
-    jobUploadTime: "6 hours ago",
-    jobType: "Full Time",
-    jobTitle: "Data Analyst",
-    companyDescription: "Company Description 5",
-    salary: "3500$",
-    smallSvg: "path/to/small5.svg",
-  },
-  {
-    companyIcon: "path/to/company6.svg",
-    jobUploadTime: "4 days ago",
-    jobType: "Part Time",
-    jobTitle: "Content Writer",
-    companyDescription: "Company Description 6",
-    salary: "2200$",
-    smallSvg: "path/to/small6.svg",
-  },
-  // Add more data objects as needed
-];
+import React, { useContext } from "react";
+import { DataContext } from "../Contexts/Data-context";
+
 function JobsGrid() {
+  const { jobs } = useContext(DataContext);
+
+  // Check if jobs data is loaded
+  if (!jobs || jobs.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-lg font-medium text-gray-500">Loading jobs...</p>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <div className="grid grid-cols-3 gap-4">
-        {jsonData.map((data, index) => (
-          <div className="bg-white p-4 rounded-lg job-box" key={index}>
-            <div className="job-media mb justify-between flex">
-              <span>
-                <img src={data.companyIcon} alt="Company Icon" />
-              </span>
-              <ul className="flex justify-between text-sm">
-                <li className=" text-blue-500">{data.jobUploadTime}</li>
-                <li className="text-blue-500 bg-blue-100 rounded-lg flex justify-center items-center">
-                  {data.jobType}
-                </li>
+    <div className="container mx-auto py-8">
+      <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+        Available Jobs
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {jobs.map((job) => (
+          <div
+            key={job._id}
+            className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+            <div className="flex justify-between items-center mb-4">
+              <img
+                className="w-12 h-12 rounded-full"
+                src="https://via.placeholder.com/50"
+                alt="Company Icon"
+              />
+              <ul className="text-sm text-gray-500">
+                <li>{new Date(job.postedAt).toDateString()}</li>
+                <li className="mt-1 text-blue-600">{job.location}</li>
               </ul>
             </div>
-            <div className="job-title">
-              <h3>Vacancy: {data.jobTitle}</h3>
-              <p>{data.companyDescription}</p>
-            </div>
-            <div className="job-amount">
-              <h6>Salary: {data.salary}</h6>
-              <img src={data.smallSvg} alt="Small SVG" />
+            <h3 className="text-lg font-semibold text-gray-800">{job.title}</h3>
+            <p className="text-sm text-gray-600 mt-2">{job.description}</p>
+            <div className="mt-4">
+              <span className="inline-block bg-blue-100 text-blue-500 text-sm font-medium px-3 py-1 rounded-lg">
+                Salary: {job.salary}
+              </span>
             </div>
           </div>
         ))}

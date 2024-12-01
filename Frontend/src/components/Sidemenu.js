@@ -4,7 +4,7 @@ import { useAuth } from "../Contexts/auth-context";
 const SideMenu = () => {
   const { logout } = useAuth();
   return (
-    <div className="w-64 bg-blue-300 shadow-lg min-h-screen">
+    <div className="w-64 bg-blue-300 shadow-lg h-screen sticky top-0">
       <div className="p-6 text-center border-b">
         <h2 className="text-lg font-bold text-gray-700">CareerGate</h2>
       </div>

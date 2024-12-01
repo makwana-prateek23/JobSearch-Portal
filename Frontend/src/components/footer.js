@@ -29,7 +29,7 @@ function Footer() {
                   <ul className="text-blue-500 font-semibold">
                     <li>
                       <i class="far fa-comments text-blue-500 mr-2"></i>
-                      Example@job.com
+                      careergate@mail.com
                     </li>
                   </ul>
                 </div>

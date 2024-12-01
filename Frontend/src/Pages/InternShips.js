@@ -1,14 +1,17 @@
-import React from "react";
-import Internship from "../components/Internship";
+import React, { useContext } from "react";
 import Layout from "../components/Layout";
-function InternShips() {
+import Internship from "../components/Internship";
+import { DataContext } from "../Contexts/Data-context";
+
+const InternShips = () => {
+  const { internships } = useContext(DataContext);
+
   return (
-    <div>
-      <Layout>
-        <Internship />
-      </Layout>
-    </div>
+    <Layout>
+      <Internship internships={internships} />
+  
+    </Layout>
   );
-}
+};
 
 export default InternShips;
