@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Internship from "../components/Internship";
 import JobsGrid from "../components/JobsGrid";
 function SearchJobs() {
