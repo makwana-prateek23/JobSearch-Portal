@@ -26,9 +26,11 @@ const register = [
   body("username").notEmpty().withMessage("Username is required"),
   body("name").notEmpty().withMessage("Name is required"),
   body("email").isEmail().withMessage("Invalid email address"),
+
   body("password")
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters long"),
+  body("skills").notEmpty().withMessage("Skills not selected"),
 
   async (req, res) => {
     const errors = validationResult(req);
@@ -36,7 +38,7 @@ const register = [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { username, name, email, password, role } = req.body;
+    const { username, name, email, password, role, skills } = req.body;
 
     try {
       // Check if user with the same email already exists
@@ -56,6 +58,7 @@ const register = [
         name,
         email,
         password: hashedPassword,
+        skills,
         role: role || "user", // Role defaults to "user" if not provided
       });
 

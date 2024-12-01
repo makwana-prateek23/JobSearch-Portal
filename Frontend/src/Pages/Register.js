@@ -1,28 +1,41 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import { Redirect } from "react-router-dom"; // Import useHistory for redirection
 
 const RegistrationForm = () => {
-  // const history = Redirect(); // Get the history object for redirection
   const [formData, setFormData] = useState({
     username: "",
     name: "",
     email: "",
     password: "",
+    skills: [], // Added skills field
   });
-  const [error, setError] = useState(null); // State to hold registration error
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
-    setError();
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setError(null); // Reset error on input change
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      // Handle skills checkbox selection
+      setFormData((prevData) => {
+        const updatedSkills = checked
+          ? [...prevData.skills, value]
+          : prevData.skills.filter((skill) => skill !== value);
+        return { ...prevData, skills: updatedSkills };
+      });
+    } else {
+      // Handle other input fields (username, name, etc.)
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data", formData);
     try {
+      // Send the registration data, including skills
       await axios.post("http://localhost:3000/auth/register", formData, {
         withCredentials: true,
       });
@@ -32,11 +45,9 @@ const RegistrationForm = () => {
         name: "",
         email: "",
         password: "",
+        skills: [], // Reset skills after successful registration
       });
-      navigate("/login");
-      // Optionally, reset form or redirect user
-      // setFormData({ username: "", name: "", email: "", password: "" });
-      // history.push("/login");
+      navigate("/login"); // Redirect to login page after successful registration
     } catch (err) {
       console.error("Error registering user:", err);
       const errorMessage =
@@ -46,8 +57,8 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="min-h-full flex-1 flex-col flex bg-blue-200  h-screen items-center justify-center px-6 py-12 lg:px-8">
-      <div className="bg-blue-100 w-4/12 shadow-lg h-screen items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-blue-200 px-6 py-12">
+      <div className="bg-blue-100 w-full sm:w-4/12 shadow-lg rounded-lg p-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-10">
           <img
             className="mx-auto h-10 w-auto logo-image1"
@@ -59,7 +70,7 @@ const RegistrationForm = () => {
           </h2>
         </div>
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className=" p-8 rounded max-w-md" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name" className="block mb-2">
                 Name:
@@ -116,11 +127,34 @@ const RegistrationForm = () => {
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
               />
             </div>
+
+            {/* Skills Selection */}
+            <div className="mb-4">
+              <label className="block mb-2">Select Skills:</label>
+              <div className="flex flex-wrap gap-4">
+                {["React", "Node.js", "JavaScript", "MongoDB", "CSS", "HTML"].map((skill) => (
+                  <label key={skill} className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      name="skills"
+                      value={skill}
+                      checked={formData.skills.includes(skill)}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    {skill}
+                  </label>
+                ))}
+              </div>
+            </div>
+
             <button
               type="submit"
-              className="bg-green-500 text-white p-2 rounded">
+              className="bg-green-500 text-white p-2 rounded w-full"
+            >
               Submit
-            </button>{" "}
+            </button>
+
             {error && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
                 <strong className="font-bold">Error!</strong>

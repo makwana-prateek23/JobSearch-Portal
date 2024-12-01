@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
-
 const app = express();
 const port = process.env.PORT || 3000;
 const dbConfig = require("./src/config/dbconfig");
@@ -11,7 +10,8 @@ const authRoutes = require("./src/routes/authRoutes");
 const jobRoutes = require("./src/routes/jobs");
 const internshipRoutes = require("./src/routes/Internships");
 const savedJobRoutes = require("./src/routes/savedJobs");
-const corsOptions = {
+const companyAuthRoutes = require("./src/routes/companyAuthRoutes")
+const corsOptions = { 
   origin: "http://localhost:3001",
   credentials: true,
 };
@@ -42,7 +42,9 @@ app.use((req, res, next) => {
 
 // Authentication routes
 app.use("/auth", authRoutes);
+app.use("/company",companyAuthRoutes)
 
+// Jobs and internships routes
 app.use("/api/jobs", jobRoutes);
 app.use("/api/internships", internshipRoutes);
 app.use("/api/savedJobs", savedJobRoutes);
@@ -57,6 +59,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

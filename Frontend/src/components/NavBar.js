@@ -9,6 +9,7 @@ function NavBar() {
   const handleToggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+  
   const handleSearch = (event) => {
     event.preventDefault();
     // Add your global search logic here using the 'searchQuery'
@@ -19,6 +20,7 @@ function NavBar() {
     const { value } = event.target;
     setSearchQuery(value);
   };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -94,23 +96,6 @@ function NavBar() {
                     className={`text-${isScrolled ? "gray-200" : "black"}`}>
                     Register
                   </Link>
-                </div>
-                <div
-                  className={`hidden lg:flex h-7 w-4/12  rounded-md ${
-                    isScrolled ? "bg-gray-200" : "bg-blue-200"
-                  }`}>
-                  <input
-                    type="text"
-                    placeholder="Search For Jobs.."
-                    onChange={handleChange}
-                    value={searchQuery}
-                    className={`outline-none  items-center rounded-md w-11/12 p-3 ${
-                      isScrolled ? "bg-gray-200" : "bg-blue-200"
-                    }`}
-                  />
-                  <span>
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                  </span>
                 </div>
               </div>
             </div>

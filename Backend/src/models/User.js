@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     default: "user", // By default, all users will have the role 'user'
   },
   refreshToken: { type: String },
+  skills: {
+    type: [String], // Array of strings to store skills
+    default: [], // Default to an empty array if no skills are provided
+  },
 });
 
 // Create the User model

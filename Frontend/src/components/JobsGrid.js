@@ -36,10 +36,14 @@ function JobsGrid() {
             </div>
             <h3 className="text-lg font-semibold text-gray-800">{job.title}</h3>
             <p className="text-sm text-gray-600 mt-2">{job.description}</p>
-            <div className="mt-4">
-              <span className="inline-block bg-blue-100 text-blue-500 text-sm font-medium px-3 py-1 rounded-lg">
+            <div className="mt-4 flex justify-between">
+              <span className=" bg-blue-100 text-blue-500 text-sm font-medium px-3 flex items-center rounded-lg">
                 Salary: {job.salary}
               </span>
+
+              <button className="border-green-200 border-2 bg-green-200 rounded-md p-2">
+                Apply now
+              </button>
             </div>
           </div>
         ))}
