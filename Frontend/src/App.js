@@ -68,6 +68,7 @@ function App() {
                 <Route path="settings" element={<Settings />} />
               </Route>
             </Route>
+            <Route ></Route>
           </Routes>
         )}
       </Router>

@@ -8,7 +8,10 @@ const RegistrationForm = () => {
     name: "",
     email: "",
     password: "",
-    skills: [], // Added skills field
+    skills: [], // For User profiles
+    companyName: "", // For Company profiles
+    companyWebsite: "", // For Company profiles
+    profileType: "user", // Default to "user"
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -33,20 +36,36 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data", formData);
+
     try {
-      // Send the registration data, including skills
-      await axios.post("http://localhost:3000/auth/register", formData, {
+      let endpoint = "http://localhost:5000/auth/register"; // Default endpoint for user
+      if (formData.profileType === "company") {
+        endpoint = "http://localhost:5000/auth/company/register"; // Company register endpoint
+      }
+
+      // Send the registration data to the appropriate endpoint based on profile type
+      await axios.post(endpoint, formData, {
         withCredentials: true,
       });
-      console.log("User registered successfully");
+
+      if (formData.profileType === "company") {
+        console.log("Company User registered successfully");
+      } else {
+        console.log("User registered successfully");
+      }
+
+      // Reset form data
       setFormData({
         username: "",
         name: "",
         email: "",
         password: "",
-        skills: [], // Reset skills after successful registration
+        skills: [],
+        companyName: "",
+        companyWebsite: "",
+        profileType: "user",
       });
+
       navigate("/login"); // Redirect to login page after successful registration
     } catch (err) {
       console.error("Error registering user:", err);
@@ -69,8 +88,38 @@ const RegistrationForm = () => {
             Register Your Account
           </h2>
         </div>
-        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-6  grid gird-cols-2 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-4" onSubmit={handleSubmit}>
+            {/* Profile Type Selection */}
+            <div clas>
+              <label className="block mb-2">Profile Type:</label>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="userProfile"
+                  name="profileType"
+                  value="user"
+                  checked={formData.profileType === "user"}
+                  onChange={handleChange}
+                  className="mr-2"
+                />
+                <label htmlFor="userProfile" className="mr-4">
+                  User
+                </label>
+                <input
+                  type="radio"
+                  id="companyProfile"
+                  name="profileType"
+                  value="company"
+                  checked={formData.profileType === "company"}
+                  onChange={handleChange}
+                  className="mr-2"
+                />
+                <label htmlFor="companyProfile">Company</label>
+              </div>
+            </div>
+
+            {/* Common Fields for All Profiles */}
             <div>
               <label htmlFor="name" className="block mb-2">
                 Name:
@@ -128,31 +177,46 @@ const RegistrationForm = () => {
               />
             </div>
 
-            {/* Skills Selection */}
-            <div className="mb-4">
-              <label className="block mb-2">Select Skills:</label>
-              <div className="flex flex-wrap gap-4">
-                {["React", "Node.js", "JavaScript", "MongoDB", "CSS", "HTML"].map((skill) => (
-                  <label key={skill} className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      name="skills"
-                      value={skill}
-                      checked={formData.skills.includes(skill)}
-                      onChange={handleChange}
-                      className="mr-2"
-                    />
-                    {skill}
+            {/* Conditional Fields for Company Profile */}
+            {formData.profileType === "company" && (
+              <div>
+                <div>
+                  <label htmlFor="companyName" className="block mb-2">
+                    Company Name:
                   </label>
-                ))}
+                  <input
+                    type="text"
+                    id="companyName"
+                    name="companyName"
+                    value={formData.companyName}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="companyWebsite" className="block mb-2">
+                    Company Website:
+                  </label>
+                  <input
+                    type="url"
+                    id="companyWebsite"
+                    name="companyWebsite"
+                    value={formData.companyWebsite}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
               </div>
-            </div>
+            )}
+
             <button
               type="submit"
-              className="bg-green-500 text-white p-2 rounded w-full"
-            >
+              className="bg-green-500 text-white p-2 rounded w-full">
               Submit
             </button>
+
             {error && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
                 <strong className="font-bold">Error!</strong>

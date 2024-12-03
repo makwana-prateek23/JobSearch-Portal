@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
   try {
     const { userId, jobId } = req.body;
 
-    // Check if the job already exists in the saved list for the user
+    // Check if the job already exists in the saved list for the <user></user>
     const existingSavedJob = await SavedJob.findOne({ userId, jobId });
     if (existingSavedJob) {
       return res.status(400).json({ message: "Job already saved" });

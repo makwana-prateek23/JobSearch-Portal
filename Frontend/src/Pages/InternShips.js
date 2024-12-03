@@ -8,8 +8,8 @@ const InternShips = () => {
 
   return (
     <Layout>
+      <h3 className="my-4">Available internship</h3>
       <Internship internships={internships} />
-  
     </Layout>
   );
 };
