@@ -9,9 +9,11 @@ const dbConfig = require("./src/config/dbconfig");
 const authRoutes = require("./src/routes/authRoutes");
 const jobRoutes = require("./src/routes/jobs");
 const internshipRoutes = require("./src/routes/Internships");
+const applicationRoutes = require("./src/routes/Application");
 const savedJobRoutes = require("./src/routes/savedJobs");
 const companyAuthRoutes = require("./src/routes/companyAuthRoutes");
 const skillsRoutes = require("./src/routes/SkiillRoutes");
+const recentActivityRoutes = require("./src/routes/RecentActivity");
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
@@ -51,7 +53,8 @@ app.use("/api", skillsRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/internships", internshipRoutes);
 app.use("/api/savedJobs", savedJobRoutes);
-
+app.use("/api/application", applicationRoutes);
+app.use("/api/recentActivity", recentActivityRoutes);
 // Root endpoint
 app.get("/", (req, res) => {
   res.json({ message: "Server is running" });

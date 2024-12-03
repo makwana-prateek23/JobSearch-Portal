@@ -13,12 +13,14 @@ import PrivateRoute from "./components/PrivateRoute";
 import LoadingSpinner from "./components/LoadingSpinner";
 import SearchJobs from "./Pages/SearchJobs";
 import SavedJobs from "./Pages/SavedJobs";
-import Applications from "./Pages/Applications";
 import DashboardHome from "./Pages/DashboardHome";
 import Settings from "./Pages/Settings";
 import CompanyDashboard from "./Pages/CompanyDashboard";
 import CompanyPrivateRoute from "./components/CompanyPrivateRoute";
-import UserRegister from "./Pages/UserRegister";
+import PostInternships from "./Pages/PostInternships";
+import PostJobs from "./Pages/PostJobs";
+import ViewApplications from "./Pages/ViewApplications";
+import CompanyDashboardHome from "./Pages/CompanyDashboardHome";
 function App() {
   const [loading, setLoading] = useState(true);
   const { checkAuthStatus } = useAuth() || {}; // Get the auth context
@@ -66,12 +68,19 @@ function App() {
                 <Route index element={<DashboardHome />} />
                 <Route path="searchjobs" element={<SearchJobs />} />
                 <Route path="savedjobs" element={<SavedJobs />} />
-                <Route path="applications" element={<Applications />} />
                 <Route path="settings" element={<Settings />} />
               </Route>
             </Route>
             <Route element={<CompanyPrivateRoute />}>
-              <Route path="/companydashboard" element={<CompanyDashboard />} />
+              <Route path="/companydashboard" element={<CompanyDashboard />}>
+                <Route index element={<CompanyDashboardHome />} />
+                <Route path="post-job" element={<PostJobs />} />
+                <Route path="post-internship" element={<PostInternships />} />
+                <Route
+                  path="view-applications"
+                  element={<ViewApplications />}
+                />
+              </Route>
             </Route>
           </Routes>
         )}
