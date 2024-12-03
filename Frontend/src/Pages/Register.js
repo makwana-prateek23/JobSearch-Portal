@@ -10,7 +10,9 @@ const RegistrationForm = () => {
     password: "",
     skills: [], // For User profiles
     companyName: "", // For Company profiles
-    companyWebsite: "", // For Company profiles
+    companyEmail: "", // For Company profiles
+    industry: "", // For Company profiles (added)
+    location: "", // For Company profiles (added)
     profileType: "user", // Default to "user"
   });
   const [error, setError] = useState(null);
@@ -62,7 +64,9 @@ const RegistrationForm = () => {
         password: "",
         skills: [],
         companyName: "",
-        companyWebsite: "",
+        companyEmail: "",
+        industry: "", // Reset added field
+        location: "", // Reset added field
         profileType: "user",
       });
 
@@ -88,10 +92,10 @@ const RegistrationForm = () => {
             Register Your Account
           </h2>
         </div>
-        <div className="mt-6  grid gird-cols-2 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-6 grid gird-cols-2 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Profile Type Selection */}
-            <div clas>
+            <div>
               <label className="block mb-2">Profile Type:</label>
               <div className="flex items-center">
                 <input
@@ -118,68 +122,70 @@ const RegistrationForm = () => {
                 <label htmlFor="companyProfile">Company</label>
               </div>
             </div>
-
+            {formData.profileType === "user" && (
+              <>
+                <div>
+                  <label htmlFor="name" className="block mb-2">
+                    Name:
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="username" className="block mb-2">
+                    User Name:
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block mb-2">
+                    Email:
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="password" className="block mb-2">
+                    Password:
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
+              </>
+            )}
             {/* Common Fields for All Profiles */}
-            <div>
-              <label htmlFor="name" className="block mb-2">
-                Name:
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-            </div>
-            <div>
-              <label htmlFor="username" className="block mb-2">
-                User Name:
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block mb-2">
-                Email:
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="block mb-2">
-                Password:
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-              />
-            </div>
-
             {/* Conditional Fields for Company Profile */}
             {formData.profileType === "company" && (
-              <div>
+              <>
                 <div>
                   <label htmlFor="companyName" className="block mb-2">
                     Company Name:
@@ -195,28 +201,68 @@ const RegistrationForm = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="companyWebsite" className="block mb-2">
-                    Company Website:
+                  <label htmlFor="companyEmail" className="block mb-2">
+                    Company Email:
                   </label>
                   <input
-                    type="url"
-                    id="companyWebsite"
-                    name="companyWebsite"
-                    value={formData.companyWebsite}
+                    type="email"
+                    id="companyEmail"
+                    name="companyEmail"
+                    value={formData.companyEmail}
                     onChange={handleChange}
                     required
                     className="w-full p-2 mb-4 border border-gray-300 rounded"
                   />
                 </div>
-              </div>
+                <div>
+                  <label htmlFor="password" className="block mb-2">
+                    Password:
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="industry" className="block mb-2">
+                    Industry:
+                  </label>
+                  <input
+                    type="text"
+                    id="industry"
+                    name="industry"
+                    value={formData.industry}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="location" className="block mb-2">
+                    Location:
+                  </label>
+                  <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 mb-4 border border-gray-300 rounded"
+                  />
+                </div>
+              </>
             )}
-
             <button
               type="submit"
               className="bg-green-500 text-white p-2 rounded w-full">
               Submit
             </button>
-
             {error && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
                 <strong className="font-bold">Error!</strong>

@@ -16,6 +16,9 @@ import SavedJobs from "./Pages/SavedJobs";
 import Applications from "./Pages/Applications";
 import DashboardHome from "./Pages/DashboardHome";
 import Settings from "./Pages/Settings";
+import CompanyDashboard from "./Pages/CompanyDashboard";
+import CompanyPrivateRoute from "./components/CompanyPrivateRoute";
+import UserRegister from "./Pages/UserRegister";
 function App() {
   const [loading, setLoading] = useState(true);
   const { checkAuthStatus } = useAuth() || {}; // Get the auth context
@@ -56,7 +59,6 @@ function App() {
             <Route path="/internships" element={<InternShips />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-
             {/* Private Routes */}
             <Route element={<PrivateRoute requiredRole="user" />}>
               <Route path="/dashboard" element={<Dashboard />}>
@@ -68,7 +70,9 @@ function App() {
                 <Route path="settings" element={<Settings />} />
               </Route>
             </Route>
-            <Route ></Route>
+            <Route element={<CompanyPrivateRoute />}>
+              <Route path="/companydashboard" element={<CompanyDashboard />} />
+            </Route>
           </Routes>
         )}
       </Router>

@@ -1,14 +1,19 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt"); // Import bcrypt
-const Company = require("../models/Company"); // Ensure the path is correct
+const bcrypt = require("bcrypt");
+const Company = require("../models/Company");
 
 // Register Company
 exports.registerCompany = async (req, res) => {
-  const { companyName, email, password, industry, location } = req.body;
+  const { companyName, companyEmail, password, industry, location } = req.body;
+
+  // Validate companyEmail and password
+  if (!companyEmail || !password) {
+    return res.status(400).json({ message: "Email and password are required" });
+  }
 
   try {
     // Check if the company already exists
-    const companyExists = await Company.findOne({ email });
+    const companyExists = await Company.findOne({ companyEmail });
     if (companyExists) {
       return res.status(400).json({ message: "Company already exists" });
     }
@@ -19,7 +24,7 @@ exports.registerCompany = async (req, res) => {
     // Create new company instance with the hashed password
     const company = new Company({
       companyName,
-      email,
+      companyEmail,
       password: hashedPassword, // Save the hashed password
       industry,
       location,
@@ -42,11 +47,11 @@ exports.registerCompany = async (req, res) => {
 
 // Login Company
 exports.loginCompany = async (req, res) => {
-  const { email, password } = req.body;
+  const { companyEmail, password } = req.body;
 
   try {
     // Check if the company exists in the database
-    const company = await Company.findOne({ email });
+    const company = await Company.findOne({ companyEmail });
     if (!company) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -58,12 +63,20 @@ exports.loginCompany = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ companyId: company._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { companyId: company._id, companyName: company.companyName },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     // Send success response
-    res.status(200).json({ message: "Company logged in successfully", token });
+    res.status(200).json({
+      message: "Company logged in successfully",
+      token,
+      companyName: company.companyName,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

@@ -106,7 +106,7 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    console.log("Stored Hashed Password:", user.password);
+
     // Check if password is correct
     const passwordMatch = await bcrypt.compare(password, user.password);
 
@@ -114,27 +114,34 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    // Generate access and refresh tokens
     const accessToken = generateAccessToken({
       userId: user._id,
       email: user.email,
       role: user.role,
+      username: user.username, // Include username in the token payload
     });
+
     const refreshToken = generateRefreshToken({
       userId: user._id,
       email: user.email,
       role: user.role,
+      username: user.username, // Include username in the refresh token payload as well
     });
 
+    // Set refresh token as a cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: "Strict",
     });
 
+    // Return success response with username and access token
     res.json({
       message: "Logged in successfully",
       accessToken,
       role: user.role,
+      username: user.username, // Send the username in the response
     });
   } catch (error) {
     console.error("Error logging in:", error);

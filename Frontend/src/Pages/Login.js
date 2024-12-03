@@ -4,6 +4,7 @@ import { useAuth } from "../Contexts/auth-context";
 
 function Login() {
   const [email, setEmail] = useState("");
+  const [companyEmail, setCompanyEmail] = useState(""); // State for company email
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loginType, setLoginType] = useState("user"); // Default to user login
@@ -14,11 +15,13 @@ function Login() {
     e.preventDefault();
     try {
       if (loginType === "user") {
-        await userLogin(email, password); // Call user login
+        await userLogin(email, password);
+        navigate("/dashboard"); // Call user login
       } else {
-        await companyLogin(email, password); // Call company login
+        await companyLogin(companyEmail, password);
+        navigate("/companydashboard"); // Call company login with companyEmail
       }
-      navigate("/dashboard"); // Navigate to the dashboard after successful login
+      // Navigate to the dashboard after successful login
     } catch (error) {
       setError(error.message);
     }
@@ -67,23 +70,26 @@ function Login() {
                 </label>
               </div>
 
-              {/* Email Input */}
+              {/* Conditional Email Input (userEmail vs. companyEmail) */}
               <div>
                 <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Email address
+                  htmlFor={loginType === "user" ? "email" : "companyEmail"}
+                  className="block text-sm font-medium leading-6 text-gray-900">
+                  {loginType === "user" ? "Email address" : "Company Email"}
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
+                    id={loginType === "user" ? "email" : "companyEmail"}
+                    name={loginType === "user" ? "email" : "companyEmail"}
                     type="email"
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset p-2 ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) =>
+                      loginType === "user"
+                        ? setEmail(e.target.value)
+                        : setCompanyEmail(e.target.value)
+                    }
                   />
                 </div>
               </div>
@@ -93,15 +99,13 @@ function Login() {
                 <div className="flex items-center justify-between">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
+                    className="block text-sm font-medium leading-6 text-gray-900">
                     Password
                   </label>
                   <div className="relative top-16 mt-text-sm">
                     <a
                       href="#!"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
-                    >
+                      className="font-semibold text-indigo-600 hover:text-indigo-500">
                       Forgot password?
                     </a>
                   </div>
@@ -128,8 +132,7 @@ function Login() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
+                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Sign in
                 </button>
               </div>

@@ -6,25 +6,18 @@ const AuthContext = createContext();
 
 // AuthProvider component
 export const AuthProvider = ({ children }) => {
-  // State for authentication, role, and token
+  // State for authentication and token
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("token") || !!localStorage.getItem("accessToken")
   );
+  const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"));
+  const [companyToken, setCompanyToken] = useState(localStorage.getItem("token"));
   const [userRole, setUserRole] = useState(localStorage.getItem("role") || "");
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("accessToken")
-  );
-  const [companyToken, setCompanyToken] = useState(
-    localStorage.getItem("token")
-  );
 
   // Function for user login
   const userLogin = async (email, password) => {
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios.post("http://localhost:5000/auth/login", { email, password });
 
       if (response.status === 200) {
         const { accessToken, role, username } = response.data;
@@ -46,25 +39,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Function for company login
-  const companyLogin = async (email, password) => {
+  const companyLogin = async (companyEmail, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/auth/company/login",
-        { email, password }
-      );
+      const response = await axios.post("http://localhost:5000/auth/company/login", { companyEmail, password });
 
       if (response.status === 200) {
-        const { token, role, companyName } = response.data;
+        const { token, companyName } = response.data;
 
-        // Store token and role in localStorage
+        // Store token and company name in localStorage
         localStorage.setItem("token", token);
-        localStorage.setItem("role", role);
         localStorage.setItem("companyName", companyName);
 
         // Update state
         setCompanyToken(token);
         setIsAuthenticated(true);
-        setUserRole(role);
       }
     } catch (error) {
       console.error("Company login failed:", error);
@@ -90,27 +78,24 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
     const storedCompanyToken = localStorage.getItem("token");
-    const storedRole = localStorage.getItem("role");
 
     if (storedAccessToken || storedCompanyToken) {
       setAccessToken(storedAccessToken);
       setCompanyToken(storedCompanyToken);
       setIsAuthenticated(true);
-      setUserRole(storedRole || "");
     }
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        isAuthenticated,
-        userRole,
-        userLogin,
-        companyLogin,
-        logout,
-        accessToken,
-        companyToken,
-      }}>
+    <AuthContext.Provider value={{
+      isAuthenticated,
+      userRole,
+      userLogin,
+      companyLogin,
+      logout,
+      accessToken,
+      companyToken,
+    }}>
       {children}
     </AuthContext.Provider>
   );
